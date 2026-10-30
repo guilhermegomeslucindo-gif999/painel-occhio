@@ -1,0 +1,11 @@
+{
+  "name": "occhioblu-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Painel de Meta Ads da Occhio Blu (QH4)",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "dev": "vercel dev",
+    "test": "node test/meta.test.js"
+  }
+}

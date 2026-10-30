@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Occhio Blu · Painel Meta Ads</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%231E3A5F'/%3E%3Ctext x='32' y='41' font-family='Helvetica,Arial' font-size='24' font-weight='700' fill='white' text-anchor='middle'%3EOB%3C/text%3E%3C/svg%3E">
+<style>
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: #F5F3EF; }
+.ob {
+  --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --bg: #F5F3EF; --card: #FFFFFF; --ink: #15213A; --muted: #6A7284; --line: #E3E0D9; --soft: #EEF1F5;
+  --accent: #1E3A5F; --accent-ink: #FFFFFF; --hi: #2C5A8C; --bar: #1E3A5F;
+  --hero: #1E3A5F; --hero-2: #16304F; --hero-ink: #FFFFFF; --hero-muted: rgba(255,255,255,.7); --hero-line: rgba(255,255,255,.2); --hero-pill: #C9D6E6;
+  --good: #23784F; --bad: #B23B32; --shadow: 0 1px 2px rgba(20,30,50,.05), 0 6px 20px rgba(20,30,50,.05);
+  font-family: var(--font); color: var(--ink); background: var(--bg); min-height: 100vh;
+  padding: clamp(14px, 2.6vw, 32px); font-variant-numeric: tabular-nums; -webkit-font-smoothing: antialiased;
+}
+.ob.m-escuro { --bg: #0D1524; --card: #141F33; --ink: #EDF1F7; --muted: #94A0B5; --line: #233251; --soft: #1A2840;
+  --accent: #8EB2E0; --accent-ink: #0D1524; --hi: #A9C6EC; --bar: #7FA6D8;
+  --hero: #0A1220; --hero-2: #111D33; --hero-pill: #8EB2E0; --good: #5CC392; --bad: #EE8277; --shadow: none; }
+.ob.p-perola { --bg: #F7F7F5; --soft: #F0F1F2; --line: #E2E3E1; --accent: #4F5D6B; --hi: #4F5D6B; --bar: #5F6E7D; --ink: #1D2731;
+  --hero: #E9EBEC; --hero-2: #DDE1E4; --hero-ink: #1D2731; --hero-muted: rgba(29,39,49,.66); --hero-line: rgba(29,39,49,.16); --hero-pill: #4F5D6B; }
+.ob.p-perola.m-escuro { --bg: #121416; --card: #1B1E21; --ink: #ECEEF0; --muted: #9AA2AA; --line: #2C3136; --soft: #22262A;
+  --accent: #C8D0D8; --accent-ink: #121416; --hi: #DCE2E8; --bar: #B5C0CB;
+  --hero: #1B1E21; --hero-2: #24282C; --hero-ink: #F2F4F5; --hero-muted: rgba(242,244,245,.66); --hero-line: rgba(242,244,245,.16); --hero-pill: #C8D0D8; }
+.ob.p-rose { --bg: #FBF5F4; --soft: #F7ECEE; --line: #EADDDD; --ink: #2A1A21; --muted: #806B72; --accent: #A3476C; --hi: #A3476C; --bar: #A3476C;
+  --hero: #3A1D2A; --hero-2: #2E1621; --hero-pill: #F0C3D3; }
+.ob.p-rose.m-escuro { --bg: #160D12; --card: #21141B; --ink: #F6ECEF; --muted: #B59AA4; --line: #3A2530; --soft: #2B1A23;
+  --accent: #E58FB0; --accent-ink: #160D12; --hi: #F0A9C3; --bar: #E58FB0; --hero: #120A0E; --hero-2: #1E1118; --hero-pill: #E58FB0; }
+.ob.p-champanhe { --bg: #F6F2EA; --soft: #F1EADC; --line: #E5DDCC; --ink: #1F1B15; --muted: #7A7062; --accent: #A6823C; --hi: #8C6B2B; --bar: #B08D4A;
+  --hero: #1F1B16; --hero-2: #2A251E; --hero-pill: #D9B872; }
+.ob.p-champanhe.m-escuro { --bg: #12100D; --card: #1C1915; --ink: #F3EEE4; --muted: #ABA190; --line: #332D24; --soft: #26221B;
+  --accent: #D9B872; --accent-ink: #12100D; --hi: #E6CA8E; --bar: #D2B068; --hero: #0C0B09; --hero-2: #1A1713; --hero-pill: #D9B872; }
+
+.ob-wrap { max-width: 1280px; margin-inline: auto; display: flex; flex-direction: column; gap: 18px; }
+.ob p { margin: 0; }
+.ob button, .ob input, .ob select { font-family: var(--font); }
+.ob-hero { background: linear-gradient(120deg, var(--hero) 0%, var(--hero) 55%, var(--hero-2) 100%); color: var(--hero-ink); border-radius: 14px;
+  display: grid; grid-template-columns: minmax(0, 1fr); overflow: hidden; }
+.ob-hero.has-photos { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .ob-hero.has-photos { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+.ob-hero-main { padding: clamp(20px, 3vw, 34px); display: flex; flex-direction: column; gap: 16px; }
+.ob-eyebrow { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--hero-pill); }
+.ob-mono { width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid currentColor; display: grid; place-items: center; font-size: 11px; letter-spacing: .02em; flex: none; }
+.ob-title { font-size: clamp(30px, 4vw, 42px); font-weight: 700; letter-spacing: .04em; line-height: 1.05; text-transform: uppercase; }
+.ob-hsub { font-size: 13px; color: var(--hero-muted); line-height: 1.5; margin-top: 4px !important; }
+.ob-hero-photos { display: none; position: relative; }
+@media (min-width: 900px) { .ob-hero.has-photos .ob-hero-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; } }
+.ob-hero-photos img { width: 100%; height: 100%; min-height: 260px; object-fit: cover; object-position: center 35%; display: block; }
+.ob-photo-cap { position: absolute; right: 14px; bottom: 12px; font-size: 10px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #fff; text-shadow: 0 1px 6px rgba(0,0,0,.6); }
+.ob-ctl-row { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: center; }
+.ob-group { display: inline-flex; align-items: center; gap: 4px; background: rgba(127,127,127,.12); border: 1px solid var(--hero-line); border-radius: 999px; padding: 4px; flex-wrap: wrap; max-width: 100%; }
+.ob-glabel { font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--hero-muted); padding: 0 6px 0 8px; }
+.ob-hero button { font-size: 12px; font-weight: 700; color: var(--hero-ink); background: none; border: 0; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.ob-hero button:hover { background: rgba(127,127,127,.18); }
+.ob-hero button.is-on { background: var(--hero-pill); color: var(--hero); }
+.ob-hero input[type=date], .ob-hero select { font-size: 12px; font-weight: 700; color: var(--hero-ink); background: transparent; border: 0; padding: 5px 6px; color-scheme: dark; }
+.ob.p-perola:not(.m-escuro) .ob-hero input[type=date] { color-scheme: light; }
+.ob-hero select { max-width: min(62vw, 330px); cursor: pointer; }
+.ob-hero select option { color: #15213A; background: #fff; }
+.ob-sep { font-size: 12px; color: var(--hero-muted); }
+.ob-theme { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; border-top: 1px solid var(--hero-line); padding-top: 14px; }
+.ob-sw { width: 12px; height: 12px; border-radius: 50%; display: inline-block; vertical-align: -1px; margin-right: 6px; border: 1px solid rgba(255,255,255,.5); }
+.s-marinho { background: #1E3A5F; } .s-perola { background: #D9DEE3; } .s-rose { background: #A3476C; } .s-champanhe { background: #B08D4A; }
+
+.ob-strip { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: center; justify-content: space-between; font-size: 12px; color: var(--muted); padding: 0 2px; }
+.ob-strip b { color: var(--ink); font-weight: 700; }
+.ob-refresh { font-size: 12px; font-weight: 700; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.ob-refresh:disabled { opacity: .5; cursor: default; }
+.ob-error { padding: 14px 16px; border-radius: 10px; background: color-mix(in srgb, var(--bad) 12%, var(--card)); border: 1px solid color-mix(in srgb, var(--bad) 40%, var(--line)); color: var(--ink); font-size: 14px; line-height: 1.5; }
+.ob-error b { color: var(--bad); }
+.ob-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: 12px; }
+.ob-kpi { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 6px; box-shadow: var(--shadow); min-height: 120px; }
+.ob-kpi.is-main { border-top: 3px solid var(--accent); }
+.ob-klabel { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.ob-kval { font-size: clamp(24px, 2.4vw, 30px); font-weight: 700; letter-spacing: -.01em; line-height: 1.1; color: var(--ink); }
+.ob-kpi.is-main .ob-kval { color: var(--hi); }
+.ob-kdelta { font-size: 12px; color: var(--muted); display: flex; gap: 4px; align-items: baseline; flex-wrap: wrap; }
+.ob-d { font-weight: 700; }
+.ob-d.is-good { color: var(--good); } .ob-d.is-bad { color: var(--bad); }
+.ob-d.is-up::before { content: "▲"; font-size: 10px; margin-right: 3px; }
+.ob-d.is-down::before { content: "▼"; font-size: 10px; margin-right: 3px; }
+.ob-kdef { font-size: 11px; color: var(--muted); line-height: 1.35; margin-top: auto; }
+.ob-note { padding: 12px 14px; border-radius: 10px; background: var(--soft); border-left: 3px solid var(--accent); font-size: 13px; color: var(--ink); line-height: 1.5; }
+
+.ob-card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: clamp(16px, 2.2vw, 26px); box-shadow: var(--shadow); min-width: 0; }
+.ob-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 10px 16px; margin-bottom: 16px; }
+.ob h2 { font-size: 18px; font-weight: 700; margin: 0 0 4px; }
+.ob-sub { font-size: 13px; color: var(--muted); line-height: 1.45; }
+.ob-seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 999px; background: var(--soft); flex-wrap: wrap; }
+.ob-seg button { font-size: 12px; font-weight: 700; color: var(--muted); background: none; border: 0; border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.ob-seg button.is-on { background: var(--accent); color: var(--accent-ink); }
+
+.ob-funnel-wrap { display: grid; gap: 18px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 860px) { .ob-funnel-wrap { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); } }
+.ob-funnel { display: flex; flex-direction: column; align-items: center; }
+.ob-step { color: #fff; text-align: center; padding: 12px 10px; clip-path: polygon(0 0, 100% 0, 94% 100%, 6% 100%); }
+.ob-step.s1 { width: 100%; background: var(--bar); }
+.ob-step.s2 { width: 84%; background: color-mix(in srgb, var(--bar) 82%, var(--bg)); }
+.ob-step.s3 { width: 68%; background: color-mix(in srgb, var(--bar) 66%, var(--bg)); }
+.ob-step.s4 { width: 52%; background: var(--good); clip-path: polygon(0 0, 100% 0, 92% 100%, 8% 100%); }
+.ob.m-escuro .ob-step { color: var(--accent-ink); }
+.ob-step-l { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; opacity: .92; }
+.ob-step-v { display: block; font-size: 22px; font-weight: 700; margin-top: 2px; }
+.ob-rate { font-size: 12px; color: var(--muted); padding: 6px 0; }
+.ob-rate b { color: var(--ink); }
+.ob-side { display: flex; flex-direction: column; gap: 10px; }
+.ob-hl { background: var(--accent); color: var(--accent-ink); border-radius: 12px; padding: 18px; font-size: 15px; line-height: 1.4; }
+.ob-hl b { font-size: 26px; font-weight: 700; display: block; }
+.ob-mini { background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+.ob-mini b { display: block; font-size: 22px; font-weight: 700; margin-top: 4px; }
+
+.ob-chart { position: relative; min-height: 300px; }
+.ob-chart svg { display: block; width: 100%; height: auto; }
+.ob-chart svg text { fill: var(--muted); font-size: 11px; font-family: var(--font); }
+.ob-chart svg text.ob-vlab { fill: var(--ink); font-weight: 700; font-size: 10.5px; }
+.ob-chart-empty { display: flex; align-items: center; justify-content: center; min-height: 300px; color: var(--muted); font-size: 13px; }
+.ob-tip { position: absolute; pointer-events: none; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.14); padding: 8px 10px; font-size: 12px; white-space: nowrap; z-index: 3; }
+.ob-tip-d { color: var(--muted); margin-bottom: 3px; font-weight: 700; }
+.ob-tip-row { display: flex; justify-content: space-between; gap: 16px; }
+.ob-tip-row.is-on { font-weight: 700; color: var(--hi); }
+
+.ob-scroll { overflow: auto; max-height: 560px; border: 1px solid var(--line); border-radius: 10px; }
+.ob-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ob-table th { position: sticky; top: 0; z-index: 1; background: var(--soft); text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); padding: 11px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.ob-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.ob-table tbody tr:last-child td { border-bottom: 0; }
+.ob-table .num { text-align: right; white-space: nowrap; }
+.ob-table td.ob-strong { font-weight: 700; min-width: 200px; }
+.ob-table td.ob-m { color: var(--muted); min-width: 140px; }
+.ob-table a { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 3px; }
+.ob-camp tbody tr { cursor: pointer; }
+.ob-camp tbody tr:hover td { background: var(--soft); }
+.ob-camp tbody tr.is-sel td { background: color-mix(in srgb, var(--accent) 12%, var(--card)); }
+.ob-camp tbody tr.is-sel td:first-child { box-shadow: inset 4px 0 0 var(--accent); }
+.ob-chip { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 12px; font-weight: 700; color: var(--muted); }
+.ob-chip::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; opacity: .55; }
+.ob-chip.is-active { color: var(--good); }
+.ob-chip.is-active::before { opacity: 1; box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 22%, transparent); }
+.ob-clear { font-size: 12px; font-weight: 700; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; }
+
+.ob-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.ob-tools-l { display: flex; flex-wrap: wrap; gap: 8px; }
+.ob-search { font-size: 13px; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; min-width: min(100%, 260px); }
+.ob-count { font-size: 13px; color: var(--muted); }
+.ob-count b { color: var(--good); font-size: 15px; }
+.ob-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 210px), 1fr)); gap: 14px; }
+.ob-ad { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+.ob-ad-img { position: relative; aspect-ratio: 4 / 5; background: var(--soft); overflow: hidden; }
+.ob-ad-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 40%; display: block; }
+.ob-ad-img > a { position: absolute; inset: 0; }
+.ob-ad-noimg { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-size: 12px; text-align: center; padding: 10px; }
+.ob-ad-play { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 46px; height: 46px; border-radius: 50%; background: rgba(0,0,0,.45); display: grid; place-items: center; pointer-events: none; }
+.ob-ad-play::after { content: ""; border-left: 14px solid #fff; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 4px; }
+.ob-ad-type { position: absolute; left: 8px; top: 8px; background: rgba(0,0,0,.55); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; pointer-events: none; }
+.ob-ad-st { position: absolute; right: 8px; top: 8px; background: var(--card); padding: 4px 8px; border-radius: 999px; pointer-events: none; }
+.ob-ad-st .ob-chip { font-size: 11px; }
+.ob-ad-body { padding: 12px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.ob-ad-name { font-size: 13px; font-weight: 700; line-height: 1.3; }
+.ob-ad-where { font-size: 11px; color: var(--muted); line-height: 1.35; }
+.ob-ad-met { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; border-top: 1px solid var(--line); padding-top: 8px; }
+.ob-ad-met span { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: block; }
+.ob-ad-met b { font-size: 14px; font-weight: 700; }
+.ob-ad-links { display: flex; gap: 6px; margin-top: auto; }
+.ob-ad-links a { flex: 1; text-align: center; font-size: 11px; font-weight: 700; text-decoration: none; padding: 7px 6px; border-radius: 8px; border: 1px solid var(--line); color: var(--ink); }
+.ob-ad-links a.is-pri { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.ob-empty { padding: 24px; text-align: center; color: var(--muted); font-size: 13px; }
+.ob-foot { font-size: 12px; color: var(--muted); line-height: 1.6; padding: 4px 2px 0; }
+[hidden] { display: none !important; }
+
+/* Carregando */
+.ob.is-loading [data-k], .ob.is-loading [data-d] { color: transparent !important; background: var(--soft); border-radius: 6px; min-width: 4ch; display: inline-block; animation: obPulse 1.2s ease-in-out infinite; }
+.ob.is-loading .ob-step [data-k] { background: rgba(255,255,255,.25); }
+.ob.is-refreshing .ob-kpis, .ob.is-refreshing .ob-card { opacity: .55; transition: opacity .3s; }
+@keyframes obPulse { 50% { opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .ob.is-loading [data-k] { animation: none; } }
+</style>
+</head>
+<body>
+<div class="ob p-marinho is-loading" id="app">
+<div class="ob-wrap">
+  <header class="ob-hero" id="topo">
+    <div class="ob-hero-main">
+      <div class="ob-eyebrow"><span class="ob-mono">OB</span>Dashboard de performance · Meta Ads</div>
+      <div>
+        <p class="ob-title">Occhio Blu</p>
+        <p class="ob-hsub">Joias em prata e semijoias · <span id="conta">Conta de anúncios</span> · dados ao vivo do Meta</p>
+      </div>
+      <div class="ob-ctl-row">
+        <div class="ob-group">
+          <button type="button" data-preset="mes">Este mês</button>
+          <button type="button" data-preset="7">7 dias</button>
+          <button type="button" data-preset="30">30 dias</button>
+          <button type="button" data-preset="anterior">Mês passado</button>
+        </div>
+        <div class="ob-group">
+          <input class="ob-date" data-param="start" type="date" min="2020-01-01" max="2099-12-31" aria-label="Data inicial">
+          <span class="ob-sep">até</span>
+          <input class="ob-date" data-param="end" type="date" min="2020-01-01" max="2099-12-31" aria-label="Data final">
+        </div>
+      </div>
+      <div class="ob-ctl-row">
+        <div class="ob-group">
+          <span class="ob-glabel">Campanha</span>
+          <select id="sel-campanha" aria-label="Campanha"><option value="">Todas as campanhas</option></select>
+        </div>
+      </div>
+      <div class="ob-theme">
+        <div class="ob-group" role="group" aria-label="Modo">
+          <button type="button" data-modo="claro">☀ Claro</button>
+          <button type="button" data-modo="escuro">☾ Escuro</button>
+        </div>
+        <div class="ob-group" role="group" aria-label="Paleta">
+          <button type="button" data-paleta="marinho"><i class="ob-sw s-marinho"></i>Marinho</button>
+          <button type="button" data-paleta="perola"><i class="ob-sw s-perola"></i>Pérola</button>
+          <button type="button" data-paleta="rose"><i class="ob-sw s-rose"></i>Rosé</button>
+          <button type="button" data-paleta="champanhe"><i class="ob-sw s-champanhe"></i>Champanhe</button>
+        </div>
+      </div>
+    </div>
+    <div class="ob-hero-photos" id="hero-fotos" aria-hidden="true"></div>
+  </header>
+
+  <div class="ob-strip">
+    <span>Período: <b id="periodo">—</b> · Comparando com: <b id="periodo-ant">—</b></span>
+    <span><span id="atualizado"></span> <button type="button" class="ob-refresh" id="btn-atualizar">↻ Atualizar agora</button></span>
+  </div>
+
+  <div class="ob-error" id="erro" hidden></div>
+
+  <section class="ob-kpis" aria-label="Números principais">
+    <div class="ob-kpi is-main"><span class="ob-klabel">Total investido</span><b class="ob-kval" data-k="spend">—</b><span class="ob-kdelta"><b class="ob-d" data-d="spend" data-good="neutro">—</b>vs período anterior</span></div>
+    <div class="ob-kpi is-main"><span class="ob-klabel">Total de leads</span><b class="ob-kval" data-k="leads">—</b><span class="ob-kdelta"><b class="ob-d" data-d="leads" data-good="up">—</b>vs período anterior</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">Custo por lead</span><b class="ob-kval" data-k="cpl">—</b><span class="ob-kdelta"><b class="ob-d" data-d="cpl" data-good="down">—</b>vs período anterior</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">Vendas</span><b class="ob-kval" data-k="purchases">—</b><span class="ob-kdelta"><b class="ob-d" data-d="purchases" data-good="up">—</b>vs período anterior</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">ROAS</span><b class="ob-kval" data-k="roas">—</b><span class="ob-kdelta"><b class="ob-d" data-d="roas" data-good="up">—</b>vs período anterior</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">CPA (custo por venda)</span><b class="ob-kval" data-k="cpa">—</b><span class="ob-kdelta"><b class="ob-d" data-d="cpa" data-good="down">—</b>vs período anterior</span></div>
+  </section>
+
+  <section class="ob-kpis" aria-label="Alcance e tráfego">
+    <div class="ob-kpi"><span class="ob-klabel">Alcance</span><b class="ob-kval" data-k="reach">—</b><span class="ob-kdelta"><b class="ob-d" data-d="reach" data-good="up">—</b>vs período anterior</span><span class="ob-kdef">Pessoas diferentes que viram</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">Impressões</span><b class="ob-kval" data-k="impressions">—</b><span class="ob-kdelta"><b class="ob-d" data-d="impressions" data-good="up">—</b>vs período anterior</span><span class="ob-kdef">Vezes que os anúncios apareceram</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">Cliques no link</span><b class="ob-kval" data-k="link_clicks">—</b><span class="ob-kdelta"><b class="ob-d" data-d="link_clicks" data-good="up">—</b>vs período anterior</span><span class="ob-kdef">Para WhatsApp, site ou perfil</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">CTR</span><b class="ob-kval" data-k="ctr">—</b><span class="ob-kdelta"><b class="ob-d" data-d="ctr" data-good="up">—</b>vs período anterior</span><span class="ob-kdef">Cliques no link ÷ impressões</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">Custo por clique</span><b class="ob-kval" data-k="cpc">—</b><span class="ob-kdelta"><b class="ob-d" data-d="cpc" data-good="down">—</b>vs período anterior</span><span class="ob-kdef">Investimento ÷ cliques no link</span></div>
+    <div class="ob-kpi"><span class="ob-klabel">Faturamento</span><b class="ob-kval" data-k="revenue">—</b><span class="ob-kdelta"><b class="ob-d" data-d="revenue" data-good="up">—</b>vs período anterior</span><span class="ob-kdef">Valor das compras registradas</span></div>
+  </section>
+
+  <p class="ob-note" id="sem-vendas" hidden>Nenhuma venda foi registrada pelo Meta neste período: as vendas fecham no WhatsApp e ainda não voltam para o pixel. Por isso vendas, faturamento, CPA e ROAS ficam vazios. Assim que houver compras registradas, eles aparecem aqui sozinhos.</p>
+
+  <section class="ob-card" id="funil">
+    <div class="ob-head">
+      <div>
+        <h2>Funil de conversão</h2>
+        <p class="ob-sub">Do anúncio visto até a venda, no período e na campanha escolhidos.</p>
+      </div>
+    </div>
+    <div class="ob-funnel-wrap">
+      <div class="ob-funnel">
+        <div class="ob-step s1"><span class="ob-step-l">Impressões</span><b class="ob-step-v" data-k="impressions">—</b></div>
+        <p class="ob-rate">↓ <b data-k="ctr">—</b> clicaram no link</p>
+        <div class="ob-step s2"><span class="ob-step-l">Cliques no link</span><b class="ob-step-v" data-k="link_clicks">—</b></div>
+        <p class="ob-rate">↓ <b data-k="click_to_lead">—</b> dos cliques viraram lead</p>
+        <div class="ob-step s3"><span class="ob-step-l">Leads</span><b class="ob-step-v" data-k="leads">—</b></div>
+        <p class="ob-rate">↓ <b data-k="lead_to_sale">—</b> dos leads viraram venda</p>
+        <div class="ob-step s4"><span class="ob-step-l">Vendas</span><b class="ob-step-v" data-k="purchases">—</b></div>
+      </div>
+      <div class="ob-side">
+        <div class="ob-hl">A cada R$ 100 investidos, geramos<b data-k="leads_per_100">—</b>leads.</div>
+        <div class="ob-mini"><span class="ob-klabel">Custo por lead</span><b data-k="cpl">—</b></div>
+        <div class="ob-mini"><span class="ob-klabel">Custo por clique</span><b data-k="cpc">—</b></div>
+        <div class="ob-mini"><span class="ob-klabel">Anúncios ativos agora</span><b data-k="ativos">—</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ob-card" id="evolucao">
+    <div class="ob-head">
+      <div>
+        <h2>Evolução diária</h2>
+        <p class="ob-sub">Valor de cada dia em cima da barra. Passe o mouse para ver investimento, cliques e leads juntos.</p>
+      </div>
+      <div class="ob-seg" role="group" aria-label="Métrica do gráfico">
+        <button type="button" data-metric="spend">Investimento</button>
+        <button type="button" data-metric="link_clicks">Cliques</button>
+        <button type="button" data-metric="leads">Leads</button>
+      </div>
+    </div>
+    <div class="ob-chart" id="grafico"></div>
+  </section>
+
+  <section class="ob-card" id="campanhas">
+    <div class="ob-head">
+      <div>
+        <h2>Campanhas</h2>
+        <p class="ob-sub">Clique numa campanha para filtrar o painel inteiro e ver só os anúncios dela. Campanhas novas aparecem aqui sozinhas quando começam a rodar.</p>
+      </div>
+      <button type="button" class="ob-clear" id="btn-limpar" hidden>Ver todas as campanhas ×</button>
+    </div>
+    <div class="ob-scroll">
+      <table class="ob-table ob-camp">
+        <thead><tr>
+          <th>Campanha</th><th>Status</th><th>Objetivo</th>
+          <th class="num">Investimento</th><th class="num">Alcance</th><th class="num">Cliques</th>
+          <th class="num">Leads</th><th class="num">Custo/lead</th><th class="num">Vendas</th><th class="num">ROAS</th>
+        </tr></thead>
+        <tbody id="tb-campanhas"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="ob-card" id="anuncios">
+    <div class="ob-head">
+      <div>
+        <h2>Anúncios</h2>
+        <p class="ob-count"><b data-k="ativos">—</b> ativos agora na seleção</p>
+      </div>
+      <p class="ob-sub">Clique na capa para ver o anúncio. “Gerenciador” abre direto no Gerenciador de Anúncios.</p>
+    </div>
+    <div class="ob-tools">
+      <div class="ob-tools-l">
+        <div class="ob-seg" role="group" aria-label="Quais anúncios">
+          <button type="button" data-adview="ativos">Ativos agora</button>
+          <button type="button" data-adview="todos">Todos do período</button>
+        </div>
+        <div class="ob-seg" role="group" aria-label="Formato">
+          <button type="button" data-layout="galeria">Galeria</button>
+          <button type="button" data-layout="tabela">Tabela</button>
+        </div>
+      </div>
+      <input class="ob-search" id="busca" type="search" placeholder="Buscar anúncio, conjunto ou campanha" aria-label="Buscar anúncio">
+    </div>
+    <div class="ob-gallery" id="galeria"></div>
+    <div class="ob-scroll" id="tabela-anuncios" hidden>
+      <table class="ob-table">
+        <thead><tr>
+          <th>Anúncio</th><th>Status</th><th>Campanha</th><th>Conjunto</th>
+          <th class="num">Investimento</th><th class="num">Impressões</th><th class="num">Cliques</th>
+          <th class="num">CTR</th><th class="num">Leads</th><th class="num">Custo/lead</th>
+        </tr></thead>
+        <tbody id="tb-anuncios"></tbody>
+      </table>
+    </div>
+    <p class="ob-empty" id="sem-anuncios" hidden>Nenhum anúncio com esses filtros.</p>
+  </section>
+
+  <p class="ob-foot">Dados do Meta Ads puxados pelo Windsor.ai a cada vez que a página é aberta. O Windsor atualiza os números de hoje e dos últimos 3 dias a cada hora; campanhas e anúncios novos aparecem assim que tiverem a primeira entrega. A comparação usa o mesmo número de dias logo antes do período escolhido. Leads = conversas iniciadas no WhatsApp (pessoas sem contato há 7+ dias) + cadastros em formulário. Vendas e faturamento = compras registradas pelo Meta (pixel, API de Conversões ou WhatsApp). Painel QH4.</p>
+</div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var app = document.getElementById('app');
+  var $ = function (s) { return document.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+
+  // ---------- Formatos ----------
+  var brl = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+  var inteiro = new Intl.NumberFormat('pt-BR');
+  var pct = function (v) { return (v * 100).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 2 }) + '%'; };
+  var FMT = {
+    spend: brl.format, revenue: brl.format, cpc: brl.format, cpl: brl.format, cpa: brl.format,
+    reach: inteiro.format, impressions: inteiro.format, link_clicks: inteiro.format, leads: inteiro.format, purchases: inteiro.format, ativos: inteiro.format,
+    ctr: pct, click_to_lead: pct, lead_to_sale: pct,
+    leads_per_100: function (v) { return v.toLocaleString('pt-BR', { maximumFractionDigits: 1 }); },
+    roas: function (v) { return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + 'x'; }
+  };
+  var fmt = function (k, v) { return v == null || !isFinite(v) ? '—' : (FMT[k] || String)(v); };
+  var fmtData = function (iso) { return iso ? iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4) : '—'; };
+
+  // ---------- Datas (fuso de São Paulo) ----------
+  var hoje = function () { return new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10); };
+  var somaDias = function (iso, d) { return new Date(Date.parse(iso + 'T00:00:00Z') + d * 864e5).toISOString().slice(0, 10); };
+  var PRESETS = {
+    mes: function () { return { start: hoje().slice(0, 8) + '01', end: hoje() }; },
+    '7': function () { return { start: somaDias(hoje(), -6), end: hoje() }; },
+    '30': function () { return { start: somaDias(hoje(), -29), end: hoje() }; },
+    anterior: function () { var fim = somaDias(hoje().slice(0, 8) + '01', -1); return { start: fim.slice(0, 8) + '01', end: fim }; }
+  };
+  var DAY = /^\d{4}-\d{2}-\d{2}$/;
+
+  // ---------- Estado ----------
+  var guardado = {};
+  try { guardado = JSON.parse(localStorage.getItem('ob-prefs') || '{}'); } catch (e) { guardado = {}; }
+  var url = new URLSearchParams(location.search);
+  var S = {
+    start: DAY.test(url.get('inicio') || '') ? url.get('inicio') : PRESETS.mes().start,
+    end: DAY.test(url.get('fim') || '') ? url.get('fim') : PRESETS.mes().end,
+    campaign: url.get('campanha') || null,
+    metric: 'spend', adview: 'ativos', layout: guardado.layout || 'galeria',
+    modo: url.get('modo') || guardado.modo || 'claro', paleta: url.get('paleta') || guardado.paleta || 'marinho',
+    busca: '', data: null, error: null, loading: true, req: 0
+  };
+  var salvaPrefs = function () {
+    try { localStorage.setItem('ob-prefs', JSON.stringify({ modo: S.modo, paleta: S.paleta, layout: S.layout })); } catch (e) { /* sem armazenamento */ }
+  };
+  var salvaUrl = function () {
+    var p = new URLSearchParams();
+    p.set('inicio', S.start); p.set('fim', S.end);
+    if (S.campaign) p.set('campanha', S.campaign);
+    try { history.replaceState(null, '', location.pathname + '?' + p.toString()); } catch (e) { /* ignora */ }
+  };
+
+  // ---------- Dados ----------
+  function carrega(fresh) {
+    var id = ++S.req;
+    S.error = null;
+    if (S.data) app.classList.add('is-refreshing'); else app.classList.add('is-loading');
+    $('#btn-atualizar').disabled = true;
+    var q = '/api/meta?start=' + S.start + '&end=' + S.end + (fresh ? '&fresh=' + Date.now() : '');
+    fetch(q, { cache: fresh ? 'no-store' : 'default' })
+      .then(function (r) { return r.json().catch(function () { return { error: 'Resposta inválida do servidor (HTTP ' + r.status + ').' }; }); })
+      .then(function (j) {
+        if (id !== S.req) return;
+        if (j.error) { S.error = j.error; } else { S.data = j; }
+      })
+      .catch(function () { if (id === S.req) S.error = 'Não foi possível falar com o servidor. Confira a internet e tente de novo.'; })
+      .then(function () {
+        if (id !== S.req) return;
+        app.classList.remove('is-loading', 'is-refreshing');
+        $('#btn-atualizar').disabled = false;
+        render();
+      });
+  }
+
+  function deriva(cur, prev) {
+    var m = function (r) {
+      r = r || {};
+      var o = {
+        spend: r.spend || 0, reach: r.reach || 0, impressions: r.impressions || 0, link_clicks: r.link_clicks || 0,
+        leads: r.leads || 0, purchases: r.purchases || 0, revenue: r.revenue || 0
+      };
+      o.ctr = o.impressions ? o.link_clicks / o.impressions : null;
+      o.cpc = o.link_clicks ? o.spend / o.link_clicks : null;
+      o.cpl = o.leads ? o.spend / o.leads : null;
+      o.cpa = o.purchases ? o.spend / o.purchases : null;
+      o.roas = o.spend && o.revenue ? o.revenue / o.spend : null;
+      o.click_to_lead = o.link_clicks ? o.leads / o.link_clicks : null;
+      o.lead_to_sale = o.leads ? o.purchases / o.leads : null;
+      o.leads_per_100 = o.spend ? (o.leads / o.spend) * 100 : null;
+      return o;
+    };
+    var a = m(cur), b = m(prev), d = {};
+    Object.keys(a).forEach(function (k) { d[k] = a[k] != null && b[k] ? (a[k] - b[k]) / b[k] : null; });
+    return { v: a, d: d };
+  }
+
+  var anunciosDaSelecao = function () {
+    if (!S.data) return [];
+    return S.data.ads.filter(function (a) { return !S.campaign || a.campaign_id === S.campaign; });
+  };
+
+  function linhaAtual() {
+    if (!S.data) return null;
+    var r;
+    if (S.campaign) {
+      var c = S.data.campaigns.find(function (x) { return x.id === S.campaign; });
+      r = deriva(c ? c.cur : {}, c ? c.prev : {});
+    } else {
+      r = deriva(S.data.totals.cur, S.data.totals.prev);
+    }
+    r.v.ativos = anunciosDaSelecao().filter(function (a) { return a.status === 'ACTIVE'; }).length;
+    return r;
+  }
+
+  // ---------- Desenho ----------
+  var STATUS_C = { ACTIVE: 'Ativa', PAUSED: 'Pausada', ARCHIVED: 'Arquivada', DELETED: 'Excluída', IN_PROCESS: 'Em análise', WITH_ISSUES: 'Com problemas' };
+  var STATUS_A = { ACTIVE: 'Ativo', PAUSED: 'Pausado', CAMPAIGN_PAUSED: 'Campanha pausada', ADSET_PAUSED: 'Conjunto pausado', ARCHIVED: 'Arquivado',
+    DELETED: 'Excluído', IN_PROCESS: 'Em análise', WITH_ISSUES: 'Com problemas', DISAPPROVED: 'Reprovado', PENDING_REVIEW: 'Em revisão',
+    PREAPPROVED: 'Pré-aprovado', PENDING_BILLING_INFO: 'Aguardando pagamento' };
+  var OBJ = { OUTCOME_SALES: 'Vendas', OUTCOME_TRAFFIC: 'Tráfego', OUTCOME_ENGAGEMENT: 'Engajamento', OUTCOME_LEADS: 'Cadastros',
+    OUTCOME_AWARENESS: 'Reconhecimento', OUTCOME_APP_PROMOTION: 'App', MESSAGES: 'Mensagens', CONVERSIONS: 'Conversões', LINK_CLICKS: 'Tráfego' };
+
+  var el = function (tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+  var chip = function (label, raw) { return el('span', 'ob-chip' + (raw === 'ACTIVE' ? ' is-active' : ''), label); };
+  var okPreview = function (u) { return /^https:\/\/fb\.me\/[A-Za-z0-9_-]+$/.test(u || ''); };
+  var okImg = function (u) { return /^https:\/\/[a-z0-9.-]+\.(fbcdn\.net|facebook\.com|cdninstagram\.com)\//i.test(u || ''); };
+  var okId = function (id) { return /^\d{5,25}$/.test(id || ''); };
+  var link = function (href, text, cls) { var a = el('a', cls || '', text); a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer'; return a; };
+  var gerenciador = function (adId) { return 'https://adsmanager.facebook.com/adsmanager/manage/ads?act=' + S.data.account.id + '&selected_ad_ids=' + adId; };
+
+  function render() {
+    app.className = 'ob p-' + S.paleta + (S.modo === 'escuro' ? ' m-escuro' : '') + (app.classList.contains('is-loading') ? ' is-loading' : '') + (app.classList.contains('is-refreshing') ? ' is-refreshing' : '');
+    document.body.style.background = getComputedStyle(app).backgroundColor;
+
+    var atual = Object.keys(PRESETS).find(function (k) { var r = PRESETS[k](); return r.start === S.start && r.end === S.end; });
+    var marca = function (attr, val) { $$('[data-' + attr + ']').forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-' + attr) === val); }); };
+    marca('preset', atual); marca('metric', S.metric); marca('adview', S.adview); marca('layout', S.layout); marca('modo', S.modo); marca('paleta', S.paleta);
+    $$('.ob-date').forEach(function (i) { if (i !== document.activeElement) i.value = S[i.getAttribute('data-param')]; });
+    $('#btn-limpar').hidden = !S.campaign;
+    $('#galeria').hidden = S.layout !== 'galeria';
+    $('#tabela-anuncios').hidden = S.layout !== 'tabela';
+
+    var erro = $('#erro');
+    erro.hidden = !S.error;
+    erro.replaceChildren();
+    if (S.error) { erro.append(el('b', '', 'Não foi possível carregar os dados. '), document.createTextNode(S.error)); }
+
+    var d = S.data;
+    $('#periodo').textContent = fmtData(S.start) + ' a ' + fmtData(S.end);
+    $('#periodo-ant').textContent = d ? fmtData(d.period.prev_start) + ' a ' + fmtData(d.period.prev_end) : '—';
+    $('#atualizado').textContent = d ? 'Atualizado às ' + new Date(d.generated_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', timeZone: 'America/Sao_Paulo' }) + ' · ' : '';
+    if (d && d.account.name) $('#conta').textContent = d.account.name;
+
+    // Seletor de campanhas
+    var sel = $('#sel-campanha');
+    var camps = d ? d.campaigns.slice().sort(function (a, b) { return b.cur.spend - a.cur.spend; }) : [];
+    if (S.campaign && d && !camps.some(function (c) { return c.id === S.campaign; })) S.campaign = null;
+    sel.replaceChildren(new Option('Todas as campanhas', ''));
+    camps.forEach(function (c) { sel.append(new Option(c.name + (c.status === 'ACTIVE' ? '  ●' : ''), c.id)); });
+    sel.value = S.campaign || '';
+
+    // Números
+    var L = linhaAtual();
+    $$('[data-k]').forEach(function (e) { e.textContent = L ? fmt(e.getAttribute('data-k'), L.v[e.getAttribute('data-k')]) : '—'; });
+    $$('[data-d]').forEach(function (e) {
+      var v = L ? L.d[e.getAttribute('data-d')] : null;
+      e.classList.remove('is-good', 'is-bad', 'is-up', 'is-down');
+      if (v == null || !isFinite(v)) { e.textContent = '—'; return; }
+      e.textContent = (v > 0 ? '+' : v < 0 ? '-' : '') + Math.abs(v * 100).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%';
+      if (v === 0) return;
+      e.classList.add(v > 0 ? 'is-up' : 'is-down');
+      var bom = e.getAttribute('data-good');
+      if (bom !== 'neutro') e.classList.add((v > 0) === (bom === 'up') ? 'is-good' : 'is-bad');
+    });
+    $('#sem-vendas').hidden = !(L && L.v.spend > 0 && L.v.purchases === 0);
+
+    desenhaFotos();
+    desenhaCampanhas(camps);
+    desenhaAnuncios();
+    desenhaGrafico();
+  }
+
+  function desenhaFotos() {
+    var box = $('#hero-fotos');
+    var fotos = S.data ? S.data.ads.filter(function (a) { return a.status === 'ACTIVE' && okImg(a.thumb); })
+      .sort(function (a, b) { return b.cur.spend - a.cur.spend; }).slice(0, 3) : [];
+    if (box.getAttribute('data-ids') === fotos.map(function (f) { return f.id; }).join(',')) return;
+    box.setAttribute('data-ids', fotos.map(function (f) { return f.id; }).join(','));
+    box.replaceChildren();
+    $('#topo').classList.toggle('has-photos', fotos.length === 3);
+    if (fotos.length !== 3) return;
+    fotos.forEach(function (f) { var i = el('img'); i.src = f.thumb; i.alt = ''; i.referrerPolicy = 'no-referrer'; box.append(i); });
+    box.append(el('span', 'ob-photo-cap', 'Anúncios no ar agora'));
+  }
+
+  function desenhaCampanhas(camps) {
+    var tb = $('#tb-campanhas');
+    tb.replaceChildren();
+    camps.forEach(function (c) {
+      var r = deriva(c.cur, c.prev).v;
+      var tr = el('tr');
+      tr.tabIndex = 0;
+      tr.setAttribute('data-key', c.id);
+      if (c.id === S.campaign) tr.className = 'is-sel';
+      var td = function (t, cls) { var x = el('td', cls, t); tr.append(x); return x; };
+      td(c.name, 'ob-strong');
+      td('').append(chip(STATUS_C[c.status] || c.status || '—', c.status));
+      td(OBJ[c.objective] || c.objective || '—');
+      td(fmt('spend', r.spend), 'num'); td(fmt('reach', r.reach), 'num'); td(fmt('link_clicks', r.link_clicks), 'num');
+      td(fmt('leads', r.leads), 'num'); td(fmt('cpl', r.cpl), 'num'); td(fmt('purchases', r.purchases), 'num'); td(fmt('roas', r.roas), 'num');
+      tb.append(tr);
+    });
+  }
+
+  function anunciosFiltrados() {
+    var q = S.busca.trim().toLowerCase();
+    return anunciosDaSelecao()
+      .filter(function (a) { return S.adview === 'todos' || a.status === 'ACTIVE'; })
+      .filter(function (a) { return !q || [a.name, a.adset, a.campaign].join(' ').toLowerCase().indexOf(q) >= 0; })
+      .sort(function (a, b) { return ((b.status === 'ACTIVE') - (a.status === 'ACTIVE')) || (b.cur.spend - a.cur.spend); });
+  }
+
+  function desenhaAnuncios() {
+    var g = $('#galeria'), tb = $('#tb-anuncios');
+    g.replaceChildren(); tb.replaceChildren();
+    if (!S.data) { $('#sem-anuncios').hidden = true; return; }
+    var rows = anunciosFiltrados();
+    $('#sem-anuncios').hidden = rows.length > 0;
+    rows.forEach(function (a) {
+      var m = deriva(a.cur, {}).v;
+      var st = STATUS_A[a.status] || a.status || '—';
+      // Card da galeria
+      var card = el('article', 'ob-ad');
+      var pic = el('div', 'ob-ad-img');
+      if (okImg(a.thumb)) {
+        var img = el('img'); img.loading = 'lazy'; img.alt = ''; img.referrerPolicy = 'no-referrer'; img.src = a.thumb;
+        img.onerror = function () { img.remove(); pic.prepend(el('div', 'ob-ad-noimg', 'Capa indisponível, abra o anúncio')); };
+        pic.append(img);
+      } else pic.append(el('div', 'ob-ad-noimg', 'Sem capa, abra o anúncio'));
+      if (a.format === 'video') pic.append(el('span', 'ob-ad-play'));
+      pic.append(el('span', 'ob-ad-type', a.format === 'video' ? 'Vídeo' : 'Imagem'));
+      var stb = el('span', 'ob-ad-st'); stb.append(chip(st, a.status)); pic.append(stb);
+      if (okPreview(a.preview)) { var cover = link(a.preview, ''); cover.setAttribute('aria-label', 'Ver ' + a.name); pic.append(cover); }
+      var body = el('div', 'ob-ad-body');
+      body.append(el('div', 'ob-ad-name', a.name), el('div', 'ob-ad-where', a.campaign + ' · ' + a.adset));
+      var met = el('div', 'ob-ad-met');
+      [['Investido', fmt('spend', m.spend)], ['Cliques', fmt('link_clicks', m.link_clicks)], ['CTR', fmt('ctr', m.ctr)], ['Leads', fmt('leads', m.leads)]]
+        .forEach(function (p) { var c = el('div'); c.append(el('span', '', p[0]), el('b', '', p[1])); met.append(c); });
+      var links = el('div', 'ob-ad-links');
+      if (okPreview(a.preview)) links.append(link(a.preview, 'Ver anúncio ↗', 'is-pri'));
+      if (okId(a.id)) links.append(link(gerenciador(a.id), 'Gerenciador ↗'));
+      body.append(met, links);
+      card.append(pic, body);
+      g.append(card);
+      // Linha da tabela
+      var tr = el('tr');
+      var td = function (t, cls) { var x = el('td', cls, t); tr.append(x); return x; };
+      var nome = td('', 'ob-strong');
+      if (okPreview(a.preview)) nome.append(link(a.preview, a.name)); else nome.textContent = a.name;
+      td('').append(chip(st, a.status));
+      td(a.campaign, 'ob-m'); td(a.adset, 'ob-m');
+      td(fmt('spend', m.spend), 'num'); td(fmt('impressions', m.impressions), 'num'); td(fmt('link_clicks', m.link_clicks), 'num');
+      td(fmt('ctr', m.ctr), 'num'); td(fmt('leads', m.leads), 'num'); td(fmt('cpl', m.cpl), 'num');
+      tb.append(tr);
+    });
+  }
+
+  var SVG = 'http://www.w3.org/2000/svg';
+  var sv = function (tag, attrs, text) { var e = document.createElementNS(SVG, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+  function desenhaGrafico() {
+    var box = $('#grafico');
+    box.replaceChildren();
+    if (!S.data) return;
+    var sel = S.campaign;
+    var by = {};
+    S.data.daily.forEach(function (r) {
+      if (sel && r.campaign_id !== sel) return;
+      var o = by[r.date] || (by[r.date] = { date: r.date, spend: 0, link_clicks: 0, leads: 0 });
+      o.spend += r.spend; o.link_clicks += r.link_clicks; o.leads += r.leads;
+    });
+    var rows = Object.keys(by).sort().map(function (k) { return by[k]; });
+    if (!rows.length) { box.append(el('p', 'ob-chart-empty', 'Sem entrega nesse período.')); return; }
+    var metric = S.metric;
+    var W = Math.max(280, box.clientWidth || 800), H = 300, top = 24, bottom = 28;
+    var max = Math.max.apply(null, rows.map(function (r) { return r[metric]; })) || 1;
+    var passo = Math.pow(10, Math.floor(Math.log10(max / 4)));
+    var stepV = [1, 2, 2.5, 5, 10].map(function (m) { return m * passo; }).find(function (s) { return max / s <= 4; }) || passo * 10;
+    var topV = Math.ceil(max / stepV) * stepV;
+    var ticks = []; for (var t = 0; t <= topV + 1e-9; t += stepV) ticks.push(t);
+    var compacto = function (v) {
+      if (metric === 'spend') return 'R$' + (v >= 1000 ? (v / 1000).toLocaleString('pt-BR', { maximumFractionDigits: 1 }) + 'k' : Math.round(v).toLocaleString('pt-BR'));
+      return Math.round(v).toLocaleString('pt-BR');
+    };
+    var svg = sv('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Evolução diária' });
+    box.append(svg);
+    var probe = sv('text', {}, compacto(topV)); svg.append(probe);
+    var left = Math.ceil(probe.getComputedTextLength ? probe.getComputedTextLength() : 40) + 12; probe.remove();
+    var y = function (v) { return H - bottom - (v / topV) * (H - bottom - top); };
+    var n = rows.length, step = (W - 6 - left) / n, bw = Math.min(36, step * 0.74);
+    ticks.forEach(function (t) {
+      svg.append(sv('line', { x1: left, x2: W - 6, y1: y(t), y2: y(t), stroke: 'var(--line)', 'stroke-width': 1 }));
+      svg.append(sv('text', { x: left - 8, y: y(t), dy: '0.32em', 'text-anchor': 'end' }, compacto(t)));
+    });
+    var cada = Math.max(1, Math.ceil(n / Math.max(2, Math.floor((W - left) / 46))));
+    var bars = [];
+    rows.forEach(function (r, i) {
+      var cx = left + step * i + step / 2;
+      if (i % cada === 0) svg.append(sv('text', { x: cx, y: H - 8, 'text-anchor': 'middle' }, r.date.slice(8, 10) + '/' + r.date.slice(5, 7)));
+      var b = sv('rect', { x: cx - bw / 2, width: bw, y: y(r[metric]), height: Math.max(0, y(0) - y(r[metric])), rx: 3, style: 'fill: var(--bar)' });
+      svg.append(b); bars.push(b);
+      if (step >= 26 && r[metric] > 0) svg.append(sv('text', { 'class': 'ob-vlab', x: cx, y: y(r[metric]) - 6, 'text-anchor': 'middle' }, compacto(r[metric])));
+    });
+    var tip = el('div', 'ob-tip'); tip.hidden = true; box.append(tip);
+    var linha = function (l, v, on) { var r = el('div', 'ob-tip-row' + (on ? ' is-on' : '')); r.append(el('span', '', l), el('span', '', v)); return r; };
+    rows.forEach(function (r, i) {
+      var hit = sv('rect', { x: left + step * i, width: step, y: 0, height: H - bottom, fill: 'transparent' });
+      var mostra = function (ev) {
+        bars.forEach(function (b, j) { b.setAttribute('opacity', j === i ? 1 : 0.4); });
+        tip.replaceChildren(el('div', 'ob-tip-d', fmtData(r.date)), linha('Investimento', fmt('spend', r.spend), metric === 'spend'),
+          linha('Cliques no link', fmt('link_clicks', r.link_clicks), metric === 'link_clicks'), linha('Leads', fmt('leads', r.leads), metric === 'leads'));
+        tip.hidden = false;
+        var bx = box.getBoundingClientRect();
+        var mx = ev.clientX - bx.left, my = ev.clientY - bx.top;
+        tip.style.left = Math.min(Math.max(0, mx + 12), box.clientWidth - tip.offsetWidth) + 'px';
+        tip.style.top = Math.max(0, my - 80) + 'px';
+      };
+      hit.addEventListener('pointerenter', mostra);
+      hit.addEventListener('pointermove', mostra);
+      hit.addEventListener('pointerleave', function () { bars.forEach(function (b) { b.setAttribute('opacity', 1); }); tip.hidden = true; });
+      svg.append(hit);
+    });
+  }
+
+  // ---------- Controles ----------
+  var mudaPeriodo = function (p) { S.start = p.start; S.end = p.end; salvaUrl(); render(); carrega(false); };
+  $$('[data-preset]').forEach(function (b) { b.addEventListener('click', function () { mudaPeriodo(PRESETS[b.getAttribute('data-preset')]()); }); });
+  $$('.ob-date').forEach(function (i) {
+    i.addEventListener('change', function () {
+      if (!i.value || !i.validity.valid) return;
+      var p = { start: S.start, end: S.end }; p[i.getAttribute('data-param')] = i.value;
+      if (p.start > p.end) return;
+      mudaPeriodo(p);
+    });
+    i.addEventListener('blur', function () { i.value = S[i.getAttribute('data-param')]; });
+  });
+  $('#sel-campanha').addEventListener('change', function (e) { S.campaign = e.target.value || null; salvaUrl(); render(); });
+  $('#btn-limpar').addEventListener('click', function () { S.campaign = null; salvaUrl(); render(); });
+  var escolhe = function (e) {
+    var tr = e.target.closest('tr[data-key]');
+    if (!tr) return;
+    if (e.type === 'keydown') { if (e.key !== 'Enter' && e.key !== ' ') return; e.preventDefault(); }
+    var id = tr.getAttribute('data-key');
+    S.campaign = S.campaign === id ? null : id;
+    salvaUrl(); render();
+    $('#topo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+  $('#tb-campanhas').addEventListener('click', escolhe);
+  $('#tb-campanhas').addEventListener('keydown', escolhe);
+  var liga = function (attr, campo, prefs) {
+    $$('[data-' + attr + ']').forEach(function (b) { b.addEventListener('click', function () { S[campo] = b.getAttribute('data-' + attr); if (prefs) salvaPrefs(); render(); }); });
+  };
+  liga('metric', 'metric'); liga('adview', 'adview'); liga('layout', 'layout', true); liga('modo', 'modo', true); liga('paleta', 'paleta', true);
+  $('#busca').addEventListener('input', function (e) { S.busca = e.target.value; desenhaAnuncios(); });
+  $('#btn-atualizar').addEventListener('click', function () { carrega(true); });
+  var largura = 0;
+  if (window.ResizeObserver) new ResizeObserver(function () { var w = $('#grafico').clientWidth; if (w !== largura) { largura = w; desenhaGrafico(); } }).observe($('#grafico'));
+  // Ao voltar para a aba depois de 10 min, busca de novo
+  var ultima = Date.now();
+  document.addEventListener('visibilitychange', function () { if (!document.hidden && Date.now() - ultima > 600000) { ultima = Date.now(); carrega(false); } });
+
+  render();
+  carrega(false);
+})();
+</script>
+</body>
+</html>
