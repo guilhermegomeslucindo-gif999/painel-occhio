@@ -5,25 +5,26 @@
 //   WINDSOR_API_KEY           (obrigatória) chave da API do Windsor.ai (app.windsor.ai → API Key)
 //   META_AD_ACCOUNT_ID        (opcional)    padrão: 465585599582830 (CA - Occhio Blu)
 //   WINDSOR_REFRESH_INTERVAL  (opcional)    de quanto em quanto tempo o Windsor busca de novo no Meta.
-//                                           Padrão: 1h (mínimo nos planos Standard/Plus). Professional/Enterprise: 15min.
-
+//                                           Sem a variável, vale o padrão do plano (o teste grátis não aceita intervalo em horas).
+//                                           Com plano pago: 1h (Standard/Plus) ou 15min (Professional/Enterprise).
+ 
 const ACCOUNT = String(process.env.META_AD_ACCOUNT_ID || '465585599582830').replace(/^act_/, '').trim();
-const REFRESH = process.env.WINDSOR_REFRESH_INTERVAL || '1h';
+const REFRESH = (process.env.WINDSOR_REFRESH_INTERVAL || '').trim();
 const BASE = 'https://connectors.windsor.ai/facebook';
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
-
+ 
 const MET = [
   'spend', 'reach', 'impressions', 'clicks', 'actions_link_click',
   'actions_onsite_conversion_messaging_conversation_started_7d', 'actions_lead',
   'actions_omni_purchase', 'action_values_omni_purchase',
 ];
 const CAMP = ['campaign_id', 'campaign', 'campaign_objective', 'campaign_effective_status'];
-
+ 
 const num = (v) => {
   const n = Number(v);
   return Number.isFinite(n) ? n : 0;
 };
-
+ 
 function metrics(row) {
   const r = row || {};
   return {
@@ -37,11 +38,11 @@ function metrics(row) {
     revenue: num(r.action_values_omni_purchase),
   };
 }
-
+ 
 const addDays = (iso, d) => new Date(Date.parse(iso + 'T00:00:00Z') + d * 864e5).toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((Date.parse(b + 'T00:00:00Z') - Date.parse(a + 'T00:00:00Z')) / 864e5) + 1;
 const todaySP = () => new Date(Date.now() - 3 * 3600e3).toISOString().slice(0, 10);
-
+ 
 class WindsorError extends Error {
   constructor(message, code, status) {
     super(message);
@@ -49,7 +50,7 @@ class WindsorError extends Error {
     this.status = status;
   }
 }
-
+ 
 function makeWindsor(key) {
   return async function windsor(fields, from, to) {
     const url = new URL(BASE);
@@ -58,9 +59,11 @@ function makeWindsor(key) {
     url.searchParams.set('date_from', from);
     url.searchParams.set('date_to', to);
     url.searchParams.set('fields', fields.join(','));
-    url.searchParams.set('refresh_since', '3d');
-    url.searchParams.set('refresh_interval', REFRESH);
-
+    if (REFRESH) {
+      url.searchParams.set('refresh_since', '3d');
+      url.searchParams.set('refresh_interval', REFRESH);
+    }
+ 
     let last = null;
     for (let attempt = 0; attempt < 3; attempt++) {
       let r;
@@ -85,14 +88,14 @@ function makeWindsor(key) {
     throw new WindsorError(last.message || 'Erro do Windsor.ai', last.code || null, 502);
   };
 }
-
+ 
 function send(res, status, body, cache) {
   res.statusCode = status;
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   res.setHeader('Cache-Control', cache || 'no-store');
   res.end(JSON.stringify(body));
 }
-
+ 
 module.exports = async function handler(req, res) {
   const key = process.env.WINDSOR_API_KEY;
   if (!key) {
@@ -100,7 +103,7 @@ module.exports = async function handler(req, res) {
       error: 'Falta configurar a variável WINDSOR_API_KEY na Vercel (Settings → Environment Variables) e fazer o Redeploy. Veja o README.',
     });
   }
-
+ 
   const q = req.query || Object.fromEntries(new URL(req.url, 'http://x').searchParams);
   let start = String(q.start || '');
   let end = String(q.end || '');
@@ -114,9 +117,9 @@ module.exports = async function handler(req, res) {
   const prevStart = addDays(start, -n);
   const prevEnd = addDays(start, -1);
   const fresh = Boolean(q.fresh);
-
+ 
   const windsor = makeWindsor(key);
-
+ 
   try {
     const [acc, accPrev, camp, campPrev, adRows, daily] = await Promise.all([
       windsor(['account_name', 'account_currency', ...MET], start, end),
@@ -131,7 +134,7 @@ module.exports = async function handler(req, res) {
       windsor(['date', 'campaign_id', 'spend', 'actions_link_click',
         'actions_onsite_conversion_messaging_conversation_started_7d', 'actions_lead'], start, end),
     ]);
-
+ 
     // Campanhas que tiveram entrega no período
     const prevById = new Map(campPrev.map((r) => [String(r.campaign_id), r]));
     const campaigns = camp.filter((r) => r.campaign_id).map((r) => ({
@@ -142,7 +145,7 @@ module.exports = async function handler(req, res) {
       cur: metrics(r),
       prev: metrics(prevById.get(String(r.campaign_id))),
     }));
-
+ 
     // Anúncios que tiveram entrega no período (um anúncio pode vir em mais de uma linha: soma)
     const ads = new Map();
     for (const r of adRows) {
@@ -167,7 +170,7 @@ module.exports = async function handler(req, res) {
         cur: m,
       });
     }
-
+ 
     const days = daily.filter((r) => r.date).map((r) => ({
       date: String(r.date).slice(0, 10),
       campaign_id: String(r.campaign_id),
@@ -175,7 +178,7 @@ module.exports = async function handler(req, res) {
       link_clicks: num(r.actions_link_click),
       leads: num(r.actions_onsite_conversion_messaging_conversation_started_7d) + num(r.actions_lead),
     }));
-
+ 
     return send(res, 200, {
       account: { id: ACCOUNT, name: (acc[0] && acc[0].account_name) || '', currency: (acc[0] && acc[0].account_currency) || 'BRL' },
       period: { start, end, prev_start: prevStart, prev_end: prevEnd },
@@ -193,6 +196,7 @@ module.exports = async function handler(req, res) {
     return send(res, err.status || 500, { error: msg, code: err.code || null });
   }
 };
-
+ 
 // Exportado só para os testes
 module.exports._internals = { metrics, addDays, daysBetween };
+ 
