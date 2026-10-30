@@ -186,7 +186,7 @@ body { background: #F5F3EF; }
 <body>
 <div class="ob p-marinho is-loading" id="app">
 <div class="ob-wrap">
-  <header class="ob-hero" id="topo">
+  <header class="ob-hero has-photos" id="topo">
     <div class="ob-hero-main">
       <div class="ob-eyebrow"><span class="ob-mono">OB</span>Dashboard de performance · Meta Ads</div>
       <div>
@@ -225,7 +225,12 @@ body { background: #F5F3EF; }
         </div>
       </div>
     </div>
-    <div class="ob-hero-photos" id="hero-fotos" aria-hidden="true"></div>
+    <div class="ob-hero-photos" aria-hidden="true">
+      <img src="img/capa-1.jpg" alt="" width="600" height="780">
+      <img src="img/capa-2.jpg" alt="" width="600" height="780">
+      <img src="img/capa-3.jpg" alt="" width="600" height="780">
+      <span class="ob-photo-cap">Occhio Blu</span>
+    </div>
   </header>
 
   <div class="ob-strip">
@@ -349,9 +354,10 @@ body { background: #F5F3EF; }
       </table>
     </div>
     <p class="ob-empty" id="sem-anuncios" hidden>Nenhum anúncio com esses filtros.</p>
+    <p class="ob-empty" id="carregando-anuncios" hidden>Carregando anúncios…</p>
   </section>
 
-  <p class="ob-foot">Dados do Meta Ads puxados pelo Windsor.ai a cada vez que a página é aberta. O Windsor atualiza os números de hoje e dos últimos 3 dias a cada hora; campanhas e anúncios novos aparecem assim que tiverem a primeira entrega. A comparação usa o mesmo número de dias logo antes do período escolhido. Leads = conversas iniciadas no WhatsApp (pessoas sem contato há 7+ dias) + cadastros em formulário. Vendas e faturamento = compras registradas pelo Meta (pixel, API de Conversões ou WhatsApp). Painel QH4.</p>
+  <p class="ob-foot">Dados do Meta Ads puxados pelo Windsor.ai a cada vez que a página é aberta. Os números mais recentes podem levar algumas horas para chegar (depende do plano do Windsor); campanhas e anúncios novos aparecem assim que tiverem a primeira entrega. A comparação usa o mesmo número de dias logo antes do período escolhido. Leads = conversas iniciadas no WhatsApp (pessoas sem contato há 7+ dias) + cadastros em formulário. Vendas e faturamento = compras registradas pelo Meta (pixel, API de Conversões ou WhatsApp). Painel QH4.</p>
 </div>
 </div>
 
@@ -397,7 +403,7 @@ body { background: #F5F3EF; }
     campaign: url.get('campanha') || null,
     metric: 'spend', adview: 'ativos', layout: guardado.layout || 'galeria',
     modo: url.get('modo') || guardado.modo || 'claro', paleta: url.get('paleta') || guardado.paleta || 'marinho',
-    busca: '', data: null, error: null, loading: true, req: 0
+    busca: '', data: null, ads: null, error: null, adsError: null, req: 0
   };
   var salvaPrefs = function () {
     try { localStorage.setItem('ob-prefs', JSON.stringify({ modo: S.modo, paleta: S.paleta, layout: S.layout })); } catch (e) { /* sem armazenamento */ }
@@ -410,25 +416,69 @@ body { background: #F5F3EF; }
   };
 
   // ---------- Dados ----------
+  // Os números (resumo) e os anúncios chegam separados: os números aparecem primeiro.
+  // Cada período já aberto fica guardado na página, então voltar a ele é instantâneo.
+  var CACHE = {};
+  var chave = function (a, b) { return a + '|' + b; };
+  var ERRO_REDE = 'Não foi possível falar com o servidor. Confira a internet e tente de novo.';
+  function busca(part, start, end, fresh) {
+    var q = '/api/meta?part=' + part + '&start=' + start + '&end=' + end + (fresh ? '&fresh=' + Date.now() : '');
+    return fetch(q, { cache: fresh ? 'no-store' : 'default' })
+      .then(function (r) { return r.json().catch(function () { return { error: 'Resposta inválida do servidor (HTTP ' + r.status + ').' }; }); })
+      .catch(function () { return { error: ERRO_REDE }; });
+  }
+
   function carrega(fresh) {
     var id = ++S.req;
-    S.error = null;
-    if (S.data) app.classList.add('is-refreshing'); else app.classList.add('is-loading');
-    $('#btn-atualizar').disabled = true;
-    var q = '/api/meta?start=' + S.start + '&end=' + S.end + (fresh ? '&fresh=' + Date.now() : '');
-    fetch(q, { cache: fresh ? 'no-store' : 'default' })
-      .then(function (r) { return r.json().catch(function () { return { error: 'Resposta inválida do servidor (HTTP ' + r.status + ').' }; }); })
-      .then(function (j) {
+    var k = chave(S.start, S.end);
+    var c = CACHE[k] || (CACHE[k] = {});
+    S.error = null; S.adsError = null;
+    if (!fresh && c.res) {
+      S.data = c.res; S.ads = c.ads || null;
+      app.classList.remove('is-loading', 'is-refreshing');
+      render();
+      if (c.ads) return;
+    } else {
+      if (!fresh) S.ads = null;
+      app.classList.add(S.data ? 'is-refreshing' : 'is-loading');
+      $('#btn-atualizar').disabled = true;
+      render();
+      busca('resumo', S.start, S.end, fresh).then(function (j) {
+        if (!j.error) c.res = j;
         if (id !== S.req) return;
-        if (j.error) { S.error = j.error; } else { S.data = j; }
-      })
-      .catch(function () { if (id === S.req) S.error = 'Não foi possível falar com o servidor. Confira a internet e tente de novo.'; })
-      .then(function () {
-        if (id !== S.req) return;
+        if (j.error) S.error = j.error; else S.data = j;
         app.classList.remove('is-loading', 'is-refreshing');
         $('#btn-atualizar').disabled = false;
         render();
+        if (!j.error) preCarrega();
       });
+    }
+    busca('anuncios', S.start, S.end, fresh).then(function (j) {
+      if (!j.error) c.ads = j.ads;
+      if (id !== S.req) return;
+      if (j.error) S.adsError = j.error; else S.ads = j.ads;
+      render();
+    });
+  }
+
+  // Depois que a tela abre, busca por trás os outros atalhos de período para o clique ser instantâneo
+  var preCarregado = false;
+  function preCarrega() {
+    if (preCarregado) return;
+    preCarregado = true;
+    var fila = Object.keys(PRESETS).map(function (k) { return PRESETS[k](); })
+      .filter(function (p) { var c = CACHE[chave(p.start, p.end)]; return !(c && c.res); });
+    var proximo = function () {
+      var p = fila.shift();
+      if (!p) return;
+      var c = CACHE[chave(p.start, p.end)] || (CACHE[chave(p.start, p.end)] = {});
+      Promise.all([busca('resumo', p.start, p.end), busca('anuncios', p.start, p.end)]).then(function (r) {
+        if (!r[0].error && !c.res) c.res = r[0];
+        if (!r[1].error && !c.ads) c.ads = r[1].ads;
+        setTimeout(proximo, 300);
+      });
+    };
+    setTimeout(proximo, 1500);
   }
 
   function deriva(cur, prev) {
@@ -454,8 +504,8 @@ body { background: #F5F3EF; }
   }
 
   var anunciosDaSelecao = function () {
-    if (!S.data) return [];
-    return S.data.ads.filter(function (a) { return !S.campaign || a.campaign_id === S.campaign; });
+    if (!S.ads) return [];
+    return S.ads.filter(function (a) { return !S.campaign || a.campaign_id === S.campaign; });
   };
 
   function linhaAtual() {
@@ -467,7 +517,7 @@ body { background: #F5F3EF; }
     } else {
       r = deriva(S.data.totals.cur, S.data.totals.prev);
     }
-    r.v.ativos = anunciosDaSelecao().filter(function (a) { return a.status === 'ACTIVE'; }).length;
+    r.v.ativos = S.ads ? anunciosDaSelecao().filter(function (a) { return a.status === 'ACTIVE'; }).length : null;
     return r;
   }
 
@@ -533,23 +583,9 @@ body { background: #F5F3EF; }
     });
     $('#sem-vendas').hidden = !(L && L.v.spend > 0 && L.v.purchases === 0);
 
-    desenhaFotos();
     desenhaCampanhas(camps);
     desenhaAnuncios();
     desenhaGrafico();
-  }
-
-  function desenhaFotos() {
-    var box = $('#hero-fotos');
-    var fotos = S.data ? S.data.ads.filter(function (a) { return a.status === 'ACTIVE' && okImg(a.thumb); })
-      .sort(function (a, b) { return b.cur.spend - a.cur.spend; }).slice(0, 3) : [];
-    if (box.getAttribute('data-ids') === fotos.map(function (f) { return f.id; }).join(',')) return;
-    box.setAttribute('data-ids', fotos.map(function (f) { return f.id; }).join(','));
-    box.replaceChildren();
-    $('#topo').classList.toggle('has-photos', fotos.length === 3);
-    if (fotos.length !== 3) return;
-    fotos.forEach(function (f) { var i = el('img'); i.src = f.thumb; i.alt = ''; i.referrerPolicy = 'no-referrer'; box.append(i); });
-    box.append(el('span', 'ob-photo-cap', 'Anúncios no ar agora'));
   }
 
   function desenhaCampanhas(camps) {
@@ -582,7 +618,14 @@ body { background: #F5F3EF; }
   function desenhaAnuncios() {
     var g = $('#galeria'), tb = $('#tb-anuncios');
     g.replaceChildren(); tb.replaceChildren();
-    if (!S.data) { $('#sem-anuncios').hidden = true; return; }
+    var aviso = $('#carregando-anuncios');
+    if (!S.ads) {
+      $('#sem-anuncios').hidden = true;
+      aviso.hidden = false;
+      aviso.textContent = S.adsError ? 'Não foi possível carregar os anúncios. ' + S.adsError : 'Carregando anúncios…';
+      return;
+    }
+    aviso.hidden = true;
     var rows = anunciosFiltrados();
     $('#sem-anuncios').hidden = rows.length > 0;
     rows.forEach(function (a) {
@@ -691,7 +734,7 @@ body { background: #F5F3EF; }
   }
 
   // ---------- Controles ----------
-  var mudaPeriodo = function (p) { S.start = p.start; S.end = p.end; salvaUrl(); render(); carrega(false); };
+  var mudaPeriodo = function (p) { S.start = p.start; S.end = p.end; salvaUrl(); carrega(false); };
   $$('[data-preset]').forEach(function (b) { b.addEventListener('click', function () { mudaPeriodo(PRESETS[b.getAttribute('data-preset')]()); }); });
   $$('.ob-date').forEach(function (i) {
     i.addEventListener('change', function () {
@@ -727,7 +770,6 @@ body { background: #F5F3EF; }
   var ultima = Date.now();
   document.addEventListener('visibilitychange', function () { if (!document.hidden && Date.now() - ultima > 600000) { ultima = Date.now(); carrega(false); } });
 
-  render();
   carrega(false);
 })();
 </script>

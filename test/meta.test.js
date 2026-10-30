@@ -11,7 +11,7 @@ function respond(u) {
   const url = new URL(u);
   assert.strictEqual(url.origin + url.pathname, 'https://connectors.windsor.ai/facebook');
   assert.strictEqual(url.searchParams.get('select_accounts'), '465585599582830');
-  assert.strictEqual(url.searchParams.get('refresh_interval'), '1h');
+  assert.strictEqual(url.searchParams.get('refresh_interval'), null, 'sem a variável, não manda intervalo (o teste grátis recusa)');
   const f = url.searchParams.get('fields').split(',');
   const prev = url.searchParams.get('date_from') < '2026-10-01';
   calls.push({ fields: f, from: url.searchParams.get('date_from'), to: url.searchParams.get('date_to') });
@@ -68,7 +68,7 @@ function run(query) {
 (async () => {
   const { status, headers, body } = await run({ start: '2026-10-01', end: '2026-10-29' });
   assert.strictEqual(status, 200, JSON.stringify(body));
-  assert.strictEqual(headers['cache-control'], 's-maxage=60, stale-while-revalidate=300');
+  assert.strictEqual(headers['cache-control'], 's-maxage=900, stale-while-revalidate=86400');
   assert.strictEqual(calls.length, 6);
 
   // Período anterior: mesmo número de dias, logo antes
@@ -109,6 +109,20 @@ function run(query) {
 
   // A chave nunca vai na resposta
   assert.ok(!JSON.stringify(body).includes('CHAVE_DE_TESTE'));
+
+  // Partes separadas: resumo (5 consultas) e anúncios (1 consulta)
+  calls.length = 0;
+  const r1 = await run({ start: '2026-10-01', end: '2026-10-29', part: 'resumo' });
+  assert.strictEqual(r1.status, 200);
+  assert.strictEqual(calls.length, 5);
+  assert.ok(r1.body.totals && r1.body.campaigns && r1.body.daily && !r1.body.ads);
+  assert.strictEqual(r1.body.totals.cur.spend, 535.65);
+  calls.length = 0;
+  const r2 = await run({ start: '2026-10-01', end: '2026-10-29', part: 'anuncios' });
+  assert.strictEqual(r2.status, 200);
+  assert.strictEqual(calls.length, 1);
+  assert.ok(r2.body.ads && !r2.body.totals && !r2.body.campaigns);
+  assert.strictEqual(r2.body.ads.length, 2);
 
   // Validações
   assert.strictEqual((await run({ start: '2026-10-29', end: '2026-10-01' })).status, 400);

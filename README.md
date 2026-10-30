@@ -52,8 +52,9 @@ O painel não aparece no Google (`noindex`). Se quiser exigir senha, a Vercel te
 ## De quanto em quanto tempo atualiza
 
 - O painel busca no Windsor toda vez que é aberto. O botão **“Atualizar agora”** força a busca.
-- O Windsor busca de novo no Meta os dados dos **últimos 3 dias a cada 1 hora**, o mínimo nos planos Standard/Plus.
-  Nos planos Professional/Enterprise dá para baixar para 15 minutos cadastrando `WINDSOR_REFRESH_INTERVAL=15min` na Vercel.
+- No **teste grátis** do Windsor vale o intervalo padrão dele para buscar de novo os dados recentes no Meta (algumas horas).
+- Com **plano pago**, dá para deixar mais rápido cadastrando na Vercel `WINDSOR_REFRESH_INTERVAL` = `1h` (Standard/Plus) ou `15min` (Professional/Enterprise) e fazendo o Redeploy.
+  No teste grátis **não** cadastre essa variável: o Windsor recusa (“Hourly data is not available for TRIAL”).
 - Uma campanha ou um anúncio novo aparece depois da **primeira entrega** (primeiras impressões) e da próxima atualização do Windsor.
 
 ---
@@ -73,6 +74,7 @@ O painel não aparece no Google (`noindex`). Se quiser exigir senha, a Vercel te
 |---|---|
 | “Falta configurar a variável WINDSOR_API_KEY” | Cadastre a chave na Vercel e faça o Redeploy |
 | “A chave do Windsor.ai está errada” | Copie de novo em app.windsor.ai (sem espaços), atualize na Vercel e faça o Redeploy |
+| “Hourly data is not available for TRIAL” | Apague a variável `WINDSOR_REFRESH_INTERVAL` na Vercel (ou assine um plano) e faça o Redeploy |
 | Painel abre sem nenhuma campanha | Confirme no Windsor que a conta “CA – Occhio Blu” continua conectada |
 | Capa “indisponível” | O link da imagem do Meta venceu. Clique em “Atualizar agora” |
 
