@@ -11,6 +11,10 @@ Os dados vêm **ao vivo** do Meta Ads pelo **Windsor.ai** sempre que alguém abr
 
 Ninguém precisa mexer no código quando uma campanha ou um anúncio for criado.
 
+> **De onde vêm os dados:** se a variável `META_ACCESS_TOKEN` estiver cadastrada na Vercel, o painel busca **direto na API do Meta** (grátis, sem prazo). Se não estiver, usa o **Windsor.ai** (`WINDSOR_API_KEY`). Dá para trocar a qualquer momento só mudando as variáveis e fazendo o Redeploy.
+>
+> **Token do Meta:** em business.facebook.com → Configurações → Usuários do sistema → escolha o usuário → **Gerar token** → app → validade **Nunca** → permissão **ads_read** → Gerar. O usuário do sistema precisa ter acesso à conta de anúncios (Contas de anúncios → a conta → Atribuir pessoas → permissão de ver desempenho).
+
 ---
 
 ## Configuração (uns 5 minutos, uma vez só)

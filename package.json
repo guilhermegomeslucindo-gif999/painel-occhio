@@ -6,6 +6,6 @@
   "engines": { "node": ">=18" },
   "scripts": {
     "dev": "vercel dev",
-    "test": "node test/meta.test.js"
+    "test": "node test/meta.test.js && node test/graph.test.js"
   }
 }
